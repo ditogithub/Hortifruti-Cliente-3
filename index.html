@@ -1919,8 +1919,7 @@ table {
 
 /*--------------------------------------------------------------------------------------------------*/
 
-/* Estilos para o modal de visualização do produto */
-  /* ============================================
+/* ============================================
    JANELA FLUTUANTE DE VISUALIZAÇÃO
    ============================================ */
 
@@ -1931,26 +1930,24 @@ table {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.75);
     display: none;
     justify-content: center;
     align-items: center;
-    z-index: 9999;
+    z-index: 999999 !important;
     cursor: pointer;
     animation: fadeIn 0.25s ease;
-    backdrop-filter: blur(4px); /* Efeito de desfoque no fundo */
+    backdrop-filter: blur(4px);
 }
 
 .product-view-modal.active {
     display: flex;
 }
 
-/* ============================================
-   JANELA (como uma janela externa)
-   ============================================ */
+/* JANELA */
 .product-view-modal .modal-content {
-    width: 520px;           /* Largura fixa da janela */
-    max-width: 92vw;        /* Mas respeita a tela em mobile */
+    width: 520px;
+    max-width: 92vw;
     max-height: 90vh;
     background: #ffffff;
     border-radius: 14px;
@@ -1962,9 +1959,10 @@ table {
     overflow: hidden;
     cursor: default;
     position: relative;
+    z-index: 999999 !important;
 }
 
-/* CABEÇALHO DA JANELA (barra de título) */
+/* CABEÇALHO DA JANELA */
 .product-view-modal .window-header {
     background: #f8f9fa;
     padding: 12px 18px;
@@ -1972,7 +1970,6 @@ table {
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid #e9ecef;
-    cursor: move;
     user-select: none;
 }
 
@@ -1985,37 +1982,7 @@ table {
     gap: 8px;
 }
 
-.product-view-modal .window-header .window-title .icon {
-    font-size: 18px;
-}
-
-/* BOTÕES DA JANELA (como Windows) */
-.product-view-modal .window-controls {
-    display: flex;
-    gap: 8px;
-}
-
-.product-view-modal .window-controls .win-btn {
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    border: none;
-    cursor: pointer;
-    transition: all 0.2s;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
-    color: transparent;
-}
-
-.product-view-modal .window-controls .win-btn:hover {
-    transform: scale(1.15);
-    color: white;
-}
-
-/* BOTÃO FECHAR - VERSÃO MELHORADA */
+/* BOTÃO FECHAR - VERSÃO DESTACADA */
 .product-view-modal .window-controls .win-close {
     width: 36px !important;
     height: 36px !important;
@@ -2042,35 +2009,16 @@ table {
     box-shadow: 0 4px 15px rgba(231, 76, 60, 0.7) !important;
 }
 
-.product-view-modal .window-controls .win-close:hover {
-    background: #ff3b30;
-    color: white;
-}
-
-.product-view-modal .window-controls .win-minimize {
-    background: #ffbd2e;
-}
-.product-view-modal .window-controls .win-minimize:hover {
-    background: #ffa500;
-}
-
-.product-view-modal .window-controls .win-maximize {
-    background: #28c840;
-}
-.product-view-modal .window-controls .win-maximize:hover {
-    background: #00a020;
-}
-
-/* CONTEÚDO DA JANELA */
+/* CORPO DA JANELA */
 .product-view-modal .window-body {
     padding: 16px;
     display: flex;
     flex-direction: column;
     align-items: center;
     background: #ffffff;
+    min-height: 200px;
 }
 
-/* IMAGEM DENTRO DA JANELA */
 .product-view-modal .window-body img {
     width: 100%;
     height: auto;
@@ -2078,10 +2026,9 @@ table {
     object-fit: contain;
     border-radius: 8px;
     background: #f8f9fa;
-    transition: transform 0.2s;
 }
 
-/* RODAPÉ DA JANELA (info do produto) */
+/* RODAPÉ DA JANELA */
 .product-view-modal .window-footer {
     padding: 12px 18px;
     background: #f8f9fa;
@@ -2103,9 +2050,7 @@ table {
     color: #27ae60;
 }
 
-/* ============================================
-   ANIMAÇÕES
-   ============================================ */
+/* ANIMAÇÕES */
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -2122,9 +2067,7 @@ table {
     }
 }
 
-/* ============================================
-   RESPONSIVO
-   ============================================ */
+/* RESPONSIVO */
 @media (max-width: 600px) {
     .product-view-modal .modal-content {
         width: 95vw;
@@ -2160,7 +2103,6 @@ table {
     }
 }
 
-/* Para telas muito grandes */
 @media (min-width: 1200px) {
     .product-view-modal .modal-content {
         width: 600px;
@@ -2169,51 +2111,177 @@ table {
     .product-view-modal .window-body img {
         max-height: 500px;
     }
-} 
-
-/*--------------------------------------------------------------
-/* ============================================
-   CORREÇÃO: EVITAR SOBREPOSIÇÃO DA JANELA
-   ============================================ */
-
-/* Garantir que a janela fique ACIMA de tudo */
-.product-view-modal {
-    z-index: 999999 !important; /* Aumentado para máximo */
 }
 
-.product-view-modal .modal-content {
-    z-index: 999999 !important;
-}
-
-/* Botão fechar sempre visível */
-.product-view-modal .win-close {
-    z-index: 999999 !important;
-    position: relative !important;
-}
-
-/* Garantir que NADA sobreponha a janela */
-.product-view-modal * {
-    z-index: auto !important;
-}
-
-/* Sobrescrever qualquer z-index dos botões do catálogo quando a janela estiver aberta */
-.product-view-modal.active ~ * .product .controls,
-.product-view-modal.active ~ * .btn-add,
-.product-view-modal.active ~ * .product button {
-    z-index: 1 !important;
-}
-
-/* Forçar que a janela fique sobre tudo */
+/* CORREÇÃO: EVITAR SOBREPOSIÇÃO */
 body:has(.product-view-modal.active) .product .controls {
     z-index: 1 !important;
 }
 
 body:has(.product-view-modal.active) header {
-    z-index: 998 !important; /* Reduzir o header quando janela aberta */
+    z-index: 998 !important;
 }
 
 body:has(.product-view-modal.active) .btn-add {
     z-index: 1 !important;
+}
+/*-----------------------------------------------------------------------------------------------------------*/
+/* Container da imagem com overlay */
+.product {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.product-img {
+    transition: transform 0.4s ease, filter 0.3s ease;
+    cursor: pointer;
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.product-img:hover {
+    transform: scale(1.1);
+    filter: brightness(0.9);
+}
+
+/* Overlay com ícone de lupa */
+.product-img:hover + .product-overlay,
+.product:hover .product-overlay {
+    opacity: 1;
+}
+
+.product-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    pointer-events: none;
+    border-radius: 10px;
+}
+
+.product-overlay span {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px 18px;
+    border-radius: 30px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #2c3e50;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+/*---------------------------------------------*/
+/* ============================================
+   EFEITO FORTE NO BOTÃO ADICIONE
+   ============================================ */
+
+/* Botão Adicione - Estado normal */
+.btn-add {
+    background: linear-gradient(135deg, #df4b10, #e67e22) !important;
+    color: white !important;
+    border: none !important;
+    padding: 10px 16px !important;
+    border-radius: 8px !important;
+    font-weight: bold !important;
+    font-size: 14px !important;
+    cursor: pointer !important;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    box-shadow: 0 4px 15px rgba(223, 75, 16, 0.3) !important;
+}
+
+/* EFEITO FORTE AO PASSAR O MOUSE */
+.btn-add:hover {
+    transform: scale(1.08) translateY(-3px) !important;
+    background: linear-gradient(135deg, #c0392b, #df4b10) !important;
+    box-shadow: 0 8px 30px rgba(223, 75, 16, 0.5) !important;
+    color: white !important;
+}
+
+/* Efeito de clique (pressionar) */
+.btn-add:active {
+    transform: scale(0.95) !important;
+    box-shadow: 0 2px 10px rgba(223, 75, 16, 0.3) !important;
+}
+
+/* Efeito de brilho ao passar o mouse */
+.btn-add::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 60%);
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.5s ease;
+}
+
+.btn-add:hover::before {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Efeito de onda ao clicar */
+.btn-add::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+}
+
+.btn-add:active::after {
+    width: 300px;
+    height: 300px;
+}
+
+/* Ícone do carrinho no botão */
+.btn-add .cart-icon {
+    font-size: 18px;
+    transition: transform 0.3s ease;
+}
+
+.btn-add:hover .cart-icon {
+    transform: scale(1.3) rotate(-10deg);
+}
+
+/* Badge de quantidade no botão */
+.btn-add .badge {
+    background: white;
+    color: #df4b10;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 2px 8px;
+    border-radius: 10px;
+    min-width: 18px;
+    transition: all 0.3s ease;
+}
+
+.btn-add:hover .badge {
+    transform: scale(1.1);
+    background: #df4b10;
+    color: white;
 }
 
 /*--------------------------------------------------------------
@@ -2581,67 +2649,68 @@ const db = firebase.firestore();
 // ============================================
 
 function visualizarProduto(id, name, img, price) {
-    // Remover modal existente
+    // Remove modal existente
     const modalExistente = document.querySelector('.product-view-modal');
     if (modalExistente) {
         modalExistente.remove();
     }
 
-    // Criar modal
     const modal = document.createElement('div');
     modal.className = 'product-view-modal active';
     
-    // Formatar preço
-    const precoFormatado = price ? formatBRL(price) : 'Preço sob consulta';
     const nomeProduto = name || 'Produto';
     
+    // 🔥 FORMATA O PREÇO
+    let precoExibido = '';
+    let corPreco = '#27ae60';
+    
+    if (price !== undefined && price !== null && price !== '' && !isNaN(price) && Number(price) > 0) {
+        precoExibido = formatBRL(Number(price));
+    } else {
+        precoExibido = 'Sob consulta';
+        corPreco = '#f39c12';
+    }
+    
+    // 🔥 LOGO FIXA (use a URL da sua logo)
+    const logoUrl = 'imagens/compras_verduras.png';
+    
+    // Imagem fixa (fallback para a imagem do produto)
+    const imagemFixa = 'https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=600&h=400&fit=crop';
+    
+    let imagemUrl = img;
+    if (!imagemUrl || imagemUrl === '' || imagemUrl === 'undefined' || imagemUrl === 'null' || imagemUrl === 'https://via.placeholder.com/400x300?text=Sem+imagem') {
+        imagemUrl = imagemFixa;
+    }
+    
     modal.innerHTML = `
-        <div class="modal-content" onclick="event.stopPropagation();">
+        <div class="modal-content" onclick="event.stopPropagation();" style="width:520px;max-width:92vw;max-height:90vh;background:#ffffff;border-radius:14px;padding:0;box-shadow:0 20px 60px rgba(0,0,0,0.4);overflow:hidden;cursor:default;position:relative;z-index:999999;">
             
-            <!-- CABEÇALHO COM BOTÃO FECHAR -->
-            <div class="window-header">
-                <div class="window-title">
-                    <span class="icon">🖼️</span>
-                    <span>${escapeHtml(nomeProduto)}</span>
+            <!-- CABEÇALHO COM LOGO E PREÇO -->
+            <div style="background:linear-gradient(90deg, #27ae60, #2ecc71);padding:10px 18px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,0.2);">
+                
+                <!-- LOGO + NOME -->
+                <div style="display:flex;align-items:center;gap:10px;">
+                    <img src="${logoUrl}" 
+                         alt="Logo" 
+                         style="width:35px;height:35px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,0.3);">
+                    <span style="font-size:14px;font-weight:600;color:white;">${escapeHtml(nomeProduto)}</span>
                 </div>
-                <div class="window-controls">
-                    <!-- BOTÃO FECHAR - MAIOR E MAIS VISÍVEL -->
-                    <button class="win-close" onclick="fecharVisualizacaoProduto()" 
-                            title="Fechar" 
-                            style="
-                                width: 36px;
-                                height: 36px;
-                                border-radius: 50%;
-                                border: none;
-                                background: #e74c3c;
-                                color: white;
-                                font-size: 20px;
-                                font-weight: bold;
-                                cursor: pointer;
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                                transition: all 0.2s;
-                                box-shadow: 0 2px 8px rgba(231, 76, 60, 0.4);
-                            "
-                            onmouseover="this.style.transform='scale(1.1)'; this.style.background='#c0392b';"
-                            onmouseout="this.style.transform='scale(1)'; this.style.background='#e74c3c';">
-                        ✕
-                    </button>
+                
+                <!-- PREÇO + FECHAR -->
+                <div style="display:flex;align-items:center;gap:12px;">
+                    <span style="font-size:18px;font-weight:bold;color:white;background:rgba(0,0,0,0.2);padding:4px 14px;border-radius:20px;">
+                        ${precoExibido}
+                    </span>
+                    <button onclick="fecharVisualizacaoProduto()" title="Fechar" style="width:34px;height:34px;border-radius:50%;border:none;background:#e74c3c;color:white;font-size:18px;font-weight:bold;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;box-shadow:0 2px 8px rgba(231,76,60,0.4);">✕</button>
                 </div>
             </div>
             
-            <!-- CORPO (imagem) -->
-            <div class="window-body">
-                <img src="${escapeHtml(img || 'https://via.placeholder.com/500x400?text=Sem+imagem')}" 
+            <!-- CORPO - IMAGEM -->
+            <div style="display:flex;align-items:center;justify-content:center;min-height:350px;background:#f8f9fa;padding:10px;">
+                <img src="${imagemUrl}" 
                      alt="${escapeHtml(nomeProduto)}"
-                     onerror="this.src='https://via.placeholder.com/500x400?text=Imagem+indispon%C3%ADvel'">
-            </div>
-            
-            <!-- RODAPÉ (nome e preço) -->
-            <div class="window-footer">
-                <span class="product-name">${escapeHtml(nomeProduto)}</span>
-                <span class="product-price">${precoFormatado}</span>
+                     style="max-width:100%;max-height:75vh;object-fit:contain;border-radius:4px;"
+                     onerror="this.src='${imagemFixa}'">
             </div>
             
         </div>
@@ -2649,14 +2718,14 @@ function visualizarProduto(id, name, img, price) {
     
     document.body.appendChild(modal);
     
-    // Fechar ao clicar no overlay (fora da janela)
+    // Fechar ao clicar no overlay
     modal.addEventListener('click', function(e) {
         if (e.target === modal) {
             fecharVisualizacaoProduto();
         }
     });
     
-    // Fechar com tecla ESC
+    // Fechar com ESC
     const handleEsc = (e) => {
         if (e.key === 'Escape') {
             fecharVisualizacaoProduto();
@@ -2665,10 +2734,8 @@ function visualizarProduto(id, name, img, price) {
     };
     document.addEventListener('keydown', handleEsc);
     
-    // Impedir scroll do body
     document.body.style.overflow = 'hidden';
 }
-
 // ============================================
 // FUNÇÃO PARA FECHAR A JANELA
 // ============================================
