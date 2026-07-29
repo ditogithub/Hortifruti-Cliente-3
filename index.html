@@ -1917,7 +1917,307 @@ table {
   width: 100%;
 }
 
-/*---------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------*/
+
+/* Estilos para o modal de visualização do produto */
+  /* ============================================
+   JANELA FLUTUANTE DE VISUALIZAÇÃO
+   ============================================ */
+
+/* Overlay (fundo escuro) */
+.product-view-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    cursor: pointer;
+    animation: fadeIn 0.25s ease;
+    backdrop-filter: blur(4px); /* Efeito de desfoque no fundo */
+}
+
+.product-view-modal.active {
+    display: flex;
+}
+
+/* ============================================
+   JANELA (como uma janela externa)
+   ============================================ */
+.product-view-modal .modal-content {
+    width: 520px;           /* Largura fixa da janela */
+    max-width: 92vw;        /* Mas respeita a tela em mobile */
+    max-height: 90vh;
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 0;
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.1);
+    animation: slideUp 0.3s ease;
+    overflow: hidden;
+    cursor: default;
+    position: relative;
+}
+
+/* CABEÇALHO DA JANELA (barra de título) */
+.product-view-modal .window-header {
+    background: #f8f9fa;
+    padding: 12px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e9ecef;
+    cursor: move;
+    user-select: none;
+}
+
+.product-view-modal .window-header .window-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #2c3e50;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.product-view-modal .window-header .window-title .icon {
+    font-size: 18px;
+}
+
+/* BOTÕES DA JANELA (como Windows) */
+.product-view-modal .window-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.product-view-modal .window-controls .win-btn {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: transparent;
+}
+
+.product-view-modal .window-controls .win-btn:hover {
+    transform: scale(1.15);
+    color: white;
+}
+
+/* BOTÃO FECHAR - VERSÃO MELHORADA */
+.product-view-modal .window-controls .win-close {
+    width: 36px !important;
+    height: 36px !important;
+    border-radius: 50% !important;
+    border: none !important;
+    background: #e74c3c !important;
+    color: white !important;
+    font-size: 20px !important;
+    font-weight: bold !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.2s !important;
+    box-shadow: 0 2px 10px rgba(231, 76, 60, 0.5) !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    line-height: 1 !important;
+}
+
+.product-view-modal .window-controls .win-close:hover {
+    transform: scale(1.15) !important;
+    background: #c0392b !important;
+    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.7) !important;
+}
+
+.product-view-modal .window-controls .win-close:hover {
+    background: #ff3b30;
+    color: white;
+}
+
+.product-view-modal .window-controls .win-minimize {
+    background: #ffbd2e;
+}
+.product-view-modal .window-controls .win-minimize:hover {
+    background: #ffa500;
+}
+
+.product-view-modal .window-controls .win-maximize {
+    background: #28c840;
+}
+.product-view-modal .window-controls .win-maximize:hover {
+    background: #00a020;
+}
+
+/* CONTEÚDO DA JANELA */
+.product-view-modal .window-body {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #ffffff;
+}
+
+/* IMAGEM DENTRO DA JANELA */
+.product-view-modal .window-body img {
+    width: 100%;
+    height: auto;
+    max-height: 450px;
+    object-fit: contain;
+    border-radius: 8px;
+    background: #f8f9fa;
+    transition: transform 0.2s;
+}
+
+/* RODAPÉ DA JANELA (info do produto) */
+.product-view-modal .window-footer {
+    padding: 12px 18px;
+    background: #f8f9fa;
+    border-top: 1px solid #e9ecef;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.product-view-modal .window-footer .product-name {
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 16px;
+}
+
+.product-view-modal .window-footer .product-price {
+    font-size: 18px;
+    font-weight: bold;
+    color: #27ae60;
+}
+
+/* ============================================
+   ANIMAÇÕES
+   ============================================ */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { 
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    to { 
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ============================================
+   RESPONSIVO
+   ============================================ */
+@media (max-width: 600px) {
+    .product-view-modal .modal-content {
+        width: 95vw;
+        max-height: 92vh;
+        border-radius: 10px;
+    }
+    
+    .product-view-modal .window-body img {
+        max-height: 350px;
+    }
+    
+    .product-view-modal .window-header {
+        padding: 10px 14px;
+    }
+    
+    .product-view-modal .window-header .window-title {
+        font-size: 12px;
+    }
+    
+    .product-view-modal .window-footer {
+        padding: 10px 14px;
+        flex-direction: column;
+        gap: 4px;
+        text-align: center;
+    }
+    
+    .product-view-modal .window-footer .product-name {
+        font-size: 14px;
+    }
+    
+    .product-view-modal .window-footer .product-price {
+        font-size: 16px;
+    }
+}
+
+/* Para telas muito grandes */
+@media (min-width: 1200px) {
+    .product-view-modal .modal-content {
+        width: 600px;
+    }
+    
+    .product-view-modal .window-body img {
+        max-height: 500px;
+    }
+} 
+
+/*--------------------------------------------------------------
+/* ============================================
+   CORREÇÃO: EVITAR SOBREPOSIÇÃO DA JANELA
+   ============================================ */
+
+/* Garantir que a janela fique ACIMA de tudo */
+.product-view-modal {
+    z-index: 999999 !important; /* Aumentado para máximo */
+}
+
+.product-view-modal .modal-content {
+    z-index: 999999 !important;
+}
+
+/* Botão fechar sempre visível */
+.product-view-modal .win-close {
+    z-index: 999999 !important;
+    position: relative !important;
+}
+
+/* Garantir que NADA sobreponha a janela */
+.product-view-modal * {
+    z-index: auto !important;
+}
+
+/* Sobrescrever qualquer z-index dos botões do catálogo quando a janela estiver aberta */
+.product-view-modal.active ~ * .product .controls,
+.product-view-modal.active ~ * .btn-add,
+.product-view-modal.active ~ * .product button {
+    z-index: 1 !important;
+}
+
+/* Forçar que a janela fique sobre tudo */
+body:has(.product-view-modal.active) .product .controls {
+    z-index: 1 !important;
+}
+
+body:has(.product-view-modal.active) header {
+    z-index: 998 !important; /* Reduzir o header quando janela aberta */
+}
+
+body:has(.product-view-modal.active) .btn-add {
+    z-index: 1 !important;
+}
+
+/*--------------------------------------------------------------
+/*-------------------------------------------------------------------------------------------------------*/
 </style> <!--final style-->
 
 
@@ -2270,6 +2570,140 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
+
+//----------------------------------------------------------------------------------------------
+// =========================
+// FUNÇÃO PARA VISUALIZAR PRODUTO AMPLIADO
+// =========================
+
+// ============================================
+// FUNÇÃO PARA ABRIR JANELA DE VISUALIZAÇÃO
+// ============================================
+
+function visualizarProduto(id, name, img, price) {
+    // Remover modal existente
+    const modalExistente = document.querySelector('.product-view-modal');
+    if (modalExistente) {
+        modalExistente.remove();
+    }
+
+    // Criar modal
+    const modal = document.createElement('div');
+    modal.className = 'product-view-modal active';
+    
+    // Formatar preço
+    const precoFormatado = price ? formatBRL(price) : 'Preço sob consulta';
+    const nomeProduto = name || 'Produto';
+    
+    modal.innerHTML = `
+        <div class="modal-content" onclick="event.stopPropagation();">
+            
+            <!-- CABEÇALHO COM BOTÃO FECHAR -->
+            <div class="window-header">
+                <div class="window-title">
+                    <span class="icon">🖼️</span>
+                    <span>${escapeHtml(nomeProduto)}</span>
+                </div>
+                <div class="window-controls">
+                    <!-- BOTÃO FECHAR - MAIOR E MAIS VISÍVEL -->
+                    <button class="win-close" onclick="fecharVisualizacaoProduto()" 
+                            title="Fechar" 
+                            style="
+                                width: 36px;
+                                height: 36px;
+                                border-radius: 50%;
+                                border: none;
+                                background: #e74c3c;
+                                color: white;
+                                font-size: 20px;
+                                font-weight: bold;
+                                cursor: pointer;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                transition: all 0.2s;
+                                box-shadow: 0 2px 8px rgba(231, 76, 60, 0.4);
+                            "
+                            onmouseover="this.style.transform='scale(1.1)'; this.style.background='#c0392b';"
+                            onmouseout="this.style.transform='scale(1)'; this.style.background='#e74c3c';">
+                        ✕
+                    </button>
+                </div>
+            </div>
+            
+            <!-- CORPO (imagem) -->
+            <div class="window-body">
+                <img src="${escapeHtml(img || 'https://via.placeholder.com/500x400?text=Sem+imagem')}" 
+                     alt="${escapeHtml(nomeProduto)}"
+                     onerror="this.src='https://via.placeholder.com/500x400?text=Imagem+indispon%C3%ADvel'">
+            </div>
+            
+            <!-- RODAPÉ (nome e preço) -->
+            <div class="window-footer">
+                <span class="product-name">${escapeHtml(nomeProduto)}</span>
+                <span class="product-price">${precoFormatado}</span>
+            </div>
+            
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // Fechar ao clicar no overlay (fora da janela)
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            fecharVisualizacaoProduto();
+        }
+    });
+    
+    // Fechar com tecla ESC
+    const handleEsc = (e) => {
+        if (e.key === 'Escape') {
+            fecharVisualizacaoProduto();
+            document.removeEventListener('keydown', handleEsc);
+        }
+    };
+    document.addEventListener('keydown', handleEsc);
+    
+    // Impedir scroll do body
+    document.body.style.overflow = 'hidden';
+}
+
+// ============================================
+// FUNÇÃO PARA FECHAR A JANELA
+// ============================================
+function fecharVisualizacaoProduto() {
+    const modal = document.querySelector('.product-view-modal');
+    if (modal) {
+        modal.classList.remove('active');
+        setTimeout(() => {
+            modal.remove();
+            document.body.style.overflow = '';
+        }, 200);
+    }
+}
+
+// =========================
+// FUNÇÕES AUXILIARES (se não existirem)
+// =========================
+
+function escapeHtml(text) {
+    if (!text) return '';
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+function formatBRL(value) {
+    if (value == null || isNaN(value)) return 'R$ 0,00';
+    return new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+    }).format(value);
+}
+
+// 🔼 FIM DAS FUNÇÕES NOVAS 🔼
+
 
 //-----------------------------------------------------------------------------------------------
 // ============================================
@@ -3319,9 +3753,7 @@ function renderizarProdutosDoCache() {
   const container = document.getElementById('productsList');
   const searchTerm = document.getElementById('searchInput').value.toLowerCase();
   
-  // Limpar container
   container.innerHTML = '';
-  
   let produtosFiltrados = 0;
   
   produtosCache.forEach(p => {
@@ -3332,7 +3764,6 @@ function renderizarProdutosDoCache() {
     const priceKg = p.priceKg != null ? Number(p.priceKg) : null;
     const precoTexto = priceUnit ?? priceKg ?? 0;
     
-    // Encontrar quantidade no carrinho
     let cartQty = 0;
     const found = cart.find(item => item.id === p._id);
     if (found) cartQty = found.qty;
@@ -3344,11 +3775,13 @@ function renderizarProdutosDoCache() {
     card.className = 'product';
     card.setAttribute('data-id', p._id);
     
-    // Template mantendo a estrutura original
     card.innerHTML = `
       <img src="${escapeHtml(p.img || 'https://via.placeholder.com/400x300?text=Sem+imagem')}" 
            class="product-img"
-           loading="lazy">
+           loading="lazy"
+           data-id="${p._id}"
+           style="cursor: pointer;"
+           title="Clique para ampliar">
       <div class="info-area">
         <div class="price-box">
           <div class="current-price">
@@ -3365,7 +3798,7 @@ function renderizarProdutosDoCache() {
           ${priceUnit ? '<option value="unit">Unidade</option>' : ''}
           ${priceKg ? '<option value="kg">Kg</option>' : ''}
         </select>
-        <input id="qty_${p._id}" type="number" value="1" min="0.1" step="0.1">
+        <input id="qty_${p._id}" type="number" value="1" min="1" step="1">
         ${
           cartEnabled
         ? `<button class="btn btn-add" id="add_${p._id}" style="display: flex; align-items: center; justify-content: center; gap: 6px; padding: 8px 12px; position: relative;">
@@ -3390,6 +3823,28 @@ function renderizarProdutosDoCache() {
     
     container.appendChild(card);
     
+    // 🔽🔽🔽🔽🔽🔽🔽🔽🔽🔽🔽🔽🔽🔽🔽🔽🔽🔽🔽🔽🔽🔽🔽🔽🔽🔽🔽🔽
+    // 🔽 ADICIONADO: EVENTO DE CLIQUE NA IMAGEM
+    // 🔽🔽🔽🔽🔽🔽🔽🔽🔽🔽🔽🔽🔽🔽🔽🔽🔽🔽🔽🔽🔽🔽🔽🔽🔽🔽🔽🔽
+    const imgElement = card.querySelector('.product-img');
+    if (imgElement) {
+        imgElement.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const productId = card.getAttribute('data-id');
+            const productData = produtosCache.find(p => p._id === productId);
+            if (productData) {
+                const preco = productData.priceUnit || productData.priceKg || 0;
+                visualizarProduto(
+                    productData._id,
+                    productData.name,
+                    productData.img,
+                    preco
+                );
+            }
+        });
+    }
+    // 🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼
+    
     // ADICIONAR EVENT LISTENERS COMO NA FUNÇÃO ORIGINAL
     const sel = document.getElementById(`mode_${p._id}`);
     const addBtn = document.getElementById(`add_${p._id}`);
@@ -3405,54 +3860,50 @@ function renderizarProdutosDoCache() {
     }
     
     if (addBtn && cartEnabled) {
-  // Adicionar event listener para adicionar ao carrinho
-  addBtn.addEventListener('click', async function() {
-    if (addBtn.disabled) return;
-    
-    const selectedMode = sel ? sel.value : (priceUnit != null ? 'unit' : 'kg');
-    const qty = Number(qtyInput ? qtyInput.value : 1) || 1;
-    const unitPrice = (selectedMode === 'kg') ? priceKg : priceUnit;
-    
-    if (unitPrice == null) {
-      alert('Preço inválido.');
-      return;
-    }
-    
-    try {
-      const snapData = (await db.collection('produtos').doc(p._id).get()).data();
-      const stock = snapData.stock ?? 0;
-      
-      if (qty > stock) {
-        alert(`Só temos ${stock} unidades disponíveis.`);
-        return;
-      }
-      
-      addToCart({
-        id: p._id,
-        name: p.name || 'Produto',
-        img: p.img,
-        mode: selectedMode,
-        qty,
-        unitPrice: Number(unitPrice)
+      addBtn.addEventListener('click', async function() {
+        if (addBtn.disabled) return;
+        
+        const selectedMode = sel ? sel.value : (priceUnit != null ? 'unit' : 'kg');
+        const qty = Number(qtyInput ? qtyInput.value : 1) || 1;
+        const unitPrice = (selectedMode === 'kg') ? priceKg : priceUnit;
+        
+        if (unitPrice == null) {
+          alert('Preço inválido.');
+          return;
+        }
+        
+        try {
+          const snapData = (await db.collection('produtos').doc(p._id).get()).data();
+          const stock = snapData.stock ?? 0;
+          
+          if (qty > stock) {
+            alert(`Só temos ${stock} unidades disponíveis.`);
+            return;
+          }
+          
+          addToCart({
+            id: p._id,
+            name: p.name || 'Produto',
+            img: p.img,
+            mode: selectedMode,
+            qty,
+            unitPrice: Number(unitPrice)
+          });
+          
+          saveCart();
+          
+          addBtn.classList.add('flash');
+          setTimeout(() => addBtn.classList.remove('flash'), 400);
+          
+          atualizarCardDoProduto(p._id);
+          
+        } catch (error) {
+          alert('Erro ao verificar estoque: ' + error.message);
+        }
       });
-      
-      saveCart();
-      
-      // Efeito visual de confirmação
-      addBtn.classList.add('flash');
-      setTimeout(() => addBtn.classList.remove('flash'), 400);
-      
-      // Atualizar apenas este card
-      atualizarCardDoProduto(p._id);
-      
-    } catch (error) {
-      alert('Erro ao verificar estoque: ' + error.message);
     }
-  });
-}
     
     if (remBtn) {
-      // Adicionar event listener para remover do carrinho
       remBtn.addEventListener('click', function() {
         const item = cart.find(c => c.id === p._id);
         if (!item) return;
@@ -3473,13 +3924,12 @@ function renderizarProdutosDoCache() {
         }
         
         saveCart();
-        renderizarProdutosDoCache(); // Recarregar produtos para atualizar todos
-        renderCart(); // Atualizar carrinho visível
+        renderizarProdutosDoCache();
+        renderCart();
       });
     }
   });
   
-  // Feedback visual
   if (produtosFiltrados === 0 && searchTerm) {
     container.innerHTML = `<div style="text-align:center; padding:20px; color:#666;">Nenhum produto encontrado para "${searchTerm}"</div>`;
   }
